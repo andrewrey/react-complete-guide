@@ -11,24 +11,30 @@ class App extends Component {
     ],
     showPersons: false,
   };
-  switchNameHandler = (newName) => {
-    // DON'T DO THIS: this.state.persons[0].name = "Mike";
-    this.setState({
-      persons: [
-        { name: newName, age: 99 },
-        { name: "Bobby", age: 83 },
-        { name: "Timmy", age: 22 },
-      ],
+  // switchNameHandler = (newName) => {
+  //   // DON'T DO THIS: this.state.persons[0].name = "Mike";
+  //   this.setState({
+  //     persons: [
+  //       { name: newName, age: 99 },
+  //       { name: "Bobby", age: 83 },
+  //       { name: "Timmy", age: 22 },
+  //     ],
+  //   });
+  // };
+
+  deleteNameHandler = (name) => {
+    this.setState((prevState) => {
+      return {
+        persons: prevState.persons.filter((person) => person.name !== name),
+      };
     });
   };
-
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "Arron", age: 99 },
-        { name: event.target.value, age: 83 },
-        { name: "Timmy", age: 22 },
-      ],
+  nameChangeHandler = (event, name) => {
+    let text = event.target.value;
+    this.setState((prevState) => {
+      return {
+        persons: prevState.persons.map((person) => (person.name === name ? { ...person, name: text } : { ...person })),
+      };
     });
   };
 
@@ -54,11 +60,14 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+          {this.state.persons.map((person) => (
+            <Person name={person.name} age={person.age} deleteName={this.deleteNameHandler.bind(this, person.name)} nameChange={(e) => this.nameChangeHandler(e, person.name)} />
+          ))}
+          {/* <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
           <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "Tommy Boy")} changed={this.nameChangeHandler}>
             My Hobbies: Racing
           </Person>
-          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} /> */}
         </div>
       );
     }
