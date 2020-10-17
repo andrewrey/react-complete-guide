@@ -56,7 +56,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
@@ -66,11 +67,12 @@ class App extends Component {
 
     let persons = null;
     if (this.state.showPersons) {
+      style.backgroundColor = "red";
       persons = (
         <div>
-          {this.state.persons.map((person) => (
-            <Person key={person.id} name={person.name} age={person.age} deleteName={this.deleteNameHandler.bind(this, person.id)} nameChange={(e) => this.nameChangeHandler(e, person.id)} />
-          ))}
+          {this.state.persons.map((person) => {
+            return <Person key={person.id} name={person.name} age={person.age} deleteName={this.deleteNameHandler.bind(this, person.id)} nameChange={(e) => this.nameChangeHandler(e, person.id)} />;
+          })}
           {/* <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
           <Person name={this.state.persons[1].name} age={this.state.persons[1].age} click={this.switchNameHandler.bind(this, "Tommy Boy")} changed={this.nameChangeHandler}>
             My Hobbies: Racing
