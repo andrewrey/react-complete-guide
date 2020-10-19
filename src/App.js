@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import classes from "./App.css";
 import Person from "./Person/Person";
 // import styled from "styled-components";
 // import Radium from "radium";
@@ -70,7 +70,7 @@ class App extends Component {
     //     color: "black",
     //   },
     // };
-
+    let btnClass = [classes.Button];
     let persons = null;
     if (this.state.showPersons) {
       // style.backgroundColor = "red";
@@ -78,6 +78,7 @@ class App extends Component {
       //   backgroundColor: "lightpink",
       //   color: "black",
       // };
+      btnClass.push(classes.Red);
       persons = (
         <div>
           {this.state.persons.map((person) => {
@@ -91,19 +92,19 @@ class App extends Component {
         </div>
       );
     }
-    let classes = [];
+    let assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push("red");
+      assignedClasses.push(classes.red);
     }
 
     if (this.state.persons.length < 2) {
-      classes.push("bold");
+      assignedClasses.push(classes.bold);
     }
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(" ")}>This is really working!</p>
-        <button className="button" onClick={this.togglePersonsHandler}>
+        <p className={assignedClasses.join(" ")}>This is really working!</p>
+        <button className={btnClass.join(" ")} onClick={this.togglePersonsHandler}>
           Toggle Persons
         </button>
         {persons}
